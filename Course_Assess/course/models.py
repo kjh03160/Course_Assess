@@ -10,5 +10,8 @@ class Course(models.Model):
     stars = models.FloatField(null=True)
     year = models.IntegerField()
 
+    class Meta:
+        unique_together =  ('name', 'prof')
+
     def __str__(self):
-        return self.name
+        return self.name, self.prof

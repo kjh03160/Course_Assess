@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Course
+from .crwal import crwal_Table
 
 # Create your views here.
 def home(request):
     return render(request, 'course.html')
 
-def db_push(request, dept, name, syllabus, prof, credit, year):
-    Course(dept=dept, syllabus=syllabus, name=name, prof=prof, credit=creidt, year=year).save()
+def db_push(request):
+    crwal_Table.crwaling('20', '1')
+    return redirect('/')
