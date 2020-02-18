@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="{%url 'signup'%}" method="POST">
+        {% csrf_token %}
+        학번:
+        <input name="username" type="text">
+        <br>
+        비밀번호:
+        <input name="password" type="password">
+        <br>
+        비밀번호 확인:
+        <input name="password2" type="password">
+        <br>
+        <input type="submit" value="회원가입">
+    </form>
+</body>
+</html>
