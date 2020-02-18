@@ -1,1 +1,26 @@
 <a href="{% url 'crwal' %}">크롤링하기</a>
+
+
+<div id="comment">
+    {% for comment in post.comments.all %}
+    <div class="comment-list">
+        <a href="#">{{ comment.author }}</a>
+        <small>{{ comment.created_date }}</small>
+        <p>{{ comment.text|linebreaks }}</p>
+    </div>
+    {% empty %}
+    <div class="comment-list">
+        <p>작성된 댓글이 없습니다!</p>
+    </div>
+    {% endfor %}
+</div>
+
+{% if request.user.is_active %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">댓글 작성</button>
+</form>
+{% else %}
+<div class="alert alert-warning">로그인된 사용자만 댓글을 작성할 수 있습니다.</div>
+{% endif %}

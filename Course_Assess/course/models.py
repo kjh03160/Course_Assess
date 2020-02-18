@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator 
 
 # Create your models here.
 class Course(models.Model):
@@ -14,4 +16,18 @@ class Course(models.Model):
         unique_together =  ('name', 'prof')
 
     def __str__(self):
-        return self.name, self.prof
+        temp = '{0} - {1}'
+        return temp.format(self.name, self.prof)
+
+class Assessment(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    post = models.ForeignKey(User, related_name='comments', on_delete = models.CASCADE)
+    star = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    contents = models.TextField(blank=True)
+    # created_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.star
+
+
+

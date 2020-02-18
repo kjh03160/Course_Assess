@@ -34,7 +34,7 @@ def login(request):
         else:
             return render(request, 'home.html', {'error':'학번 혹은 패스워드가 틀렸습니다'})
     else:
-        return render(request, '/')
+        return redirect('/')
 
 
 def logout(request):

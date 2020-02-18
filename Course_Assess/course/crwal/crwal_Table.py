@@ -48,7 +48,7 @@ def crwaling(rq_year, rq_semester):
             tds = i.findAll('td')
             year = int(tds[2].get_text().strip())
             subject = tds[4].get_text().strip().splitlines()
-            subject = " / ".join(subject)
+            subject = " ".join(subject)
             try:
                 syllabus = tds[5].find('a')['href'].split('\'')
                 ag_1 = syllabus[1]
@@ -61,6 +61,8 @@ def crwaling(rq_year, rq_semester):
                 syllabus = 'None'
 
             prof = tds[11].get_text().strip().split('(')[0].strip()
+            if len(prof) == 0:
+                continue
             credit = int(tds[12].get_text().strip())
             try:
                 Course(year=year, name=subject, syllabus=syllabus, prof=prof, credit=credit, dept=dept_list[k]).save()
