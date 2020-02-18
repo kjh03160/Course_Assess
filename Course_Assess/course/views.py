@@ -45,3 +45,25 @@ def post_detail(request, name):
     else:
         form = CommentForm()
     return render(request, 'post_detail.html', {'post': post, 'form': form})
+
+def search_by_prof(request):
+    if request.method == "POST":
+        prof = request.POST["prof"]
+        courses = Course.objects.filter(prof__contains=prof).order_by('year')
+        if len(courses) != 0:
+            return render(request, 'post.html', {'courses' : courses})
+        else:
+            return render(request, 'post.html', {'error':'검색 결과가 없습니다'})
+    else:
+        return redirect('/')
+
+def search_by_course(request):
+    if request.method == "POST":
+        name = request.POST["course"]
+        courses = Course.objects.filter(name__contains=name).order_by('year')
+        if len(courses) != 0:
+            return render(request, 'post.html', {'courses' : courses})
+        else:
+            return render(request, 'post.html', {'error':'검색 결과가 없습니다'})
+    else:
+        return redirect('/')
