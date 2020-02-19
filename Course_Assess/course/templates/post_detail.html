@@ -21,23 +21,25 @@
     <form method="POST" action="/posts/newreply">
         {% csrf_token %}
         <input type="hidden" value="{{name}}+{{prof}}" name="blog">
-        댓글 작성 : <input type="text" name="comment_body"></input>
+        평가 작성 : <input type="text" name="comment_body"></input>
         <input type="text" name="comment_stars"></input>
         <button type="submit" class="btn btn-secondary">작성</button>
     </form>
 
     <div id="comment">
-        {% for comment in course.course_comments.all %}
+        
+        {% for comment in post.course_comments.all %}
         <div class="comment-list">
             <a href="#">{{ comment.post }}</a>
             <p>{{ comment.star }}</p>
 
+            <small>{{ comment.created_date }}</small>
+            {% if comment.post == request.user %}<a href="{% url 'remove' name=name prof=prof pk=comment.pk %}">삭제</a>{% endif %}
             <p>{{ comment.contents|linebreaks }}</p>
-            <p>{{ comment.created_date|linebreaks }}</p>
         </div>
         {% empty %}
         <div class="comment-list">
-            <p>작성된 댓글이 없습니다!</p>
+            <p>작성된 평가가 없습니다!</p>
         </div>
         {% endfor %}
     </div>

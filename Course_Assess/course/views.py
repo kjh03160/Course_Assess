@@ -16,7 +16,8 @@ def course_list(request):
     return render(request, 'post.html', {'courses':courses})
 
 def post_view(request, name, prof):
-    course = Course.objects.filter(name=name, prof=prof)[0]
+    print(name, '+++', prof)
+    course = Course.objects.get(name=name, prof=prof)
     # print(course.comments)
     course_name = course.name
     course_prof = course.prof
@@ -29,24 +30,10 @@ def post_view(request, name, prof):
         'dept' : course_dept,
         'year' : course_year,
         'stars' : course_stars,
-        'course' : course,
+        'post' : course,
     }
     return render(request, 'post_detail.html', context)
 
-
-def post_detail(request, name):
-    post = get_object_or_404(Course, pk=name)
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.author = request.user
-            comment.post = post
-            comment.save()
-            return redirect('post_detail', pk=name)
-    else:
-        form = CommentForm()
-    return render(request, 'post_detail.html', {'post': post, 'form': form})
 
 def search_by_prof(request):
     if request.method == "POST":
@@ -71,28 +58,49 @@ def search_by_course(request):
         return redirect('/')
 
 def newreply(request):
-        if request.method == 'POST':
-                comment = Assessment()
-                comment.contents = request.POST['comment_body']
-                parse = request.POST['blog']
-                prof = parse.split('+')[1]
-                name = parse.split('+')[0]
-                course = Course.objects.get(name = name, prof = prof) 
-                comment.course = course                
-                comment.post = request.user
-                comment.star = request.POST['comment_stars']
-                comment.save()
+    if request.method == 'POST':
+            comment = Assessment()
+            comment.contents = request.POST['comment_body']
+            parse = request.POST['blog']
+            prof = parse.split('+')[1]
+            name = parse.split('+')[0]
+            course = Course.objects.get(name = name, prof = prof) 
+            comment.course = course                
+            comment.post = request.user
+            comment.star = request.POST['comment_stars']
+            comment.save()
 
-                count = course.count
-                course.count += 1
-                course.save()
-                if course.stars:
-                    course.stars = round(((course.stars * count) + int(comment.star)) / course.count, 2)
-                else:
-                    course.stars = int(request.POST['comment_stars']) 
-                course.save()
-                return redirect('/posts/'+ str(comment.course.name)+ '/' + comment.course.prof, {'course' : course})
-        else :
-                return redirect('/posts') # 홈으로
+            count = course.count
+            course.count += 1
+            course.save()
+            if course.stars:
+                course.stars = round(((course.stars * count) + int(comment.star)) / course.count, 2)
+            else:
+                course.stars = int(request.POST['comment_stars']) 
+            course.save()
+            return redirect('/posts/'+ str(comment.course.name)+ '/' + comment.course.prof, {'course' : course})
+    else :
+            return redirect('/posts') # 홈으로
 
+def comment_remove(request, name, prof, pk):
+    print(1111111111111111111111111)
+    print(name, prof)
+    post = get_object_or_404(Course, name=name, prof=prof)
+    comment = Assessment.objects.get(pk=pk)
+    if not comment.post == request.user:
+        return HttpResponseRedirect("/posts/{0}/{1}".format(post.name, post.prof))
+    else:
+        count = post.count
+        assess = comment.star
+        temp = post.stars * count - assess
+        count -= 1
+        post.stars = rount(temp / count, 2)
+        post.count = count
+        
+        post.save()
+        print(post.name, post.prof)
+
+        comment.delete()
+        return HttpResponseRedirect("/posts/{0}/{1}".format(post.name, post.prof))
+        return redirect('/')
 
