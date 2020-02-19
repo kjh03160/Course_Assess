@@ -1,19 +1,7 @@
 <a href="{% url 'crwal' %}">크롤링하기</a>
 
 
-<div id="comment">
-    {% for comment in post.comments.all %}
-    <div class="comment-list">
-        <a href="#">{{ comment.author }}</a>
-        <small>{{ comment.created_date }}</small>
-        <p>{{ comment.text|linebreaks }}</p>
-    </div>
-    {% empty %}
-    <div class="comment-list">
-        <p>작성된 댓글이 없습니다!</p>
-    </div>
-    {% endfor %}
-</div>
+
 
 {% if request.user.is_active %}
 <form method="post">

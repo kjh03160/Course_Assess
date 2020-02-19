@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Course, Assessment
 from .crwal import crwal_Table
 from django.http import HttpResponse
-
+from django.template.loader import render_to_string
 # Create your views here.
 def home(request):
     return render(request, 'course.html')
@@ -23,14 +23,13 @@ def post_view(request, name, prof):
     course_dept = course.dept
     course_year = course.year
     course_stars = course.stars
-    course_comment = course
     context = {
         'name' : course_name,
         'prof' : course_prof,
         'dept' : course_dept,
         'year' : course_year,
         'stars' : course_stars,
-        'post' : course,
+        'course' : course,
     }
     return render(request, 'post_detail.html', context)
 
@@ -87,7 +86,6 @@ def newreply(request):
                 count = course.count
                 course.count += 1
                 course.save()
-                print(count, course.count)
                 if course.stars:
                     course.stars = round(((course.stars * count) + int(comment.star)) / course.count, 2)
                 else:
@@ -96,3 +94,5 @@ def newreply(request):
                 return redirect('/posts/'+ str(comment.course.name)+ '/' + comment.course.prof, {'course' : course})
         else :
                 return redirect('/posts') # 홈으로
+
+

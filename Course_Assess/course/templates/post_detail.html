@@ -10,7 +10,6 @@
 <body>
 
     <div class="side head">
-        
         <h2>{{name}}</h2>
         <p><label>학과</label><span> {{dept}}</span></p>
         <p><label>학년</label><span> {{year}}</span></p>
@@ -26,10 +25,22 @@
         <input type="text" name="comment_stars"></input>
         <button type="submit" class="btn btn-secondary">작성</button>
     </form>
-     
-    {% for comment in course.comments.all %}
-        <p> <span> {{comment.post}} </span> : {{ comment.contents }} </p>
-    {% endfor %}
+
+    <div id="comment">
+        {% for comment in course.course_comments.all %}
+        <div class="comment-list">
+            <a href="#">{{ comment.post }}</a>
+            <p>{{ comment.star }}</p>
+
+            <p>{{ comment.contents|linebreaks }}</p>
+            <p>{{ comment.created_date|linebreaks }}</p>
+        </div>
+        {% empty %}
+        <div class="comment-list">
+            <p>작성된 댓글이 없습니다!</p>
+        </div>
+        {% endfor %}
+    </div>
 
 
 </body>
