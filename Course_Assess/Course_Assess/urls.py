@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^posts/(?P<name>.+)/(?P<prof>.+)/$', views.post_view, name='detail'),
     path('posts_search_by_prof', views.search_by_prof, name='prof'),
     path('posts_search_by_course', views.search_by_course, name='course'),
-
+    path('posts/newreply',views.newreply, name="newreply"),
 
     # 유저계정
     path('auth/', include('UserProfile.urls'))

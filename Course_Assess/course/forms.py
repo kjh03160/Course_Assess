@@ -1,15 +1,15 @@
 from django import forms
-from .model import Comment
+from .model import Assessment
 
 
 class CommentForm(forms.ModelForm):
     class Meta:
-        model = Comment
-        fields = ('text',)
+        model = Assessment
+        fields = ('star','context',)
 
         widgets={
-            "text":forms.Textarea(attrs={'placeholder':'.','class':'form-control','rows':5}),
+            "context":forms.Textarea(attrs={'placeholder':'.','class':'form-control','rows':5}),
         }
         labels={
-            "text":""
+            "context":""
         }

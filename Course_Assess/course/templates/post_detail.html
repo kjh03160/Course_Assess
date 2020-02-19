@@ -19,8 +19,17 @@
         <hr>
     </div>
 
-
-
+    <form method="POST" action="/posts/newreply">
+        {% csrf_token %}
+        <input type="hidden" value="{{name}}+{{prof}}" name="blog">
+        댓글 작성 : <input type="text" name="comment_body"></input>
+        <input type="text" name="comment_stars"></input>
+        <button type="submit" class="btn btn-secondary">작성</button>
+    </form>
+     
+    {% for comment in course.comments.all %}
+        <p> <span> {{comment.post}} </span> : {{ comment.contents }} </p>
+    {% endfor %}
 
 
 </body>

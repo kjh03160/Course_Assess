@@ -11,6 +11,7 @@ class Course(models.Model):
     credit = models.IntegerField()
     stars = models.FloatField(null=True)
     year = models.IntegerField()
+    count = models.IntegerField()
 
     class Meta:
         unique_together =  ('name', 'prof')
@@ -23,11 +24,11 @@ class Assessment(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     post = models.ForeignKey(User, related_name='comments', on_delete = models.CASCADE)
     star = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    contents = models.TextField(blank=True)
+    contents = models.TextField(blank=False)
     # created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.star
+        return str(self.star)
 
 
 

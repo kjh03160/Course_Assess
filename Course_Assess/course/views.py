@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Course
+from .models import Course, Assessment
 from .crwal import crwal_Table
 from django.http import HttpResponse
 
@@ -17,17 +17,20 @@ def course_list(request):
 
 def post_view(request, name, prof):
     course = Course.objects.filter(name=name, prof=prof)[0]
+    # print(course.comments)
     course_name = course.name
     course_prof = course.prof
     course_dept = course.dept
     course_year = course.year
     course_stars = course.stars
+    course_comment = course
     context = {
         'name' : course_name,
         'prof' : course_prof,
         'dept' : course_dept,
         'year' : course_year,
         'stars' : course_stars,
+        'post' : course,
     }
     return render(request, 'post_detail.html', context)
 
@@ -67,3 +70,29 @@ def search_by_course(request):
             return render(request, 'post.html', {'error':'검색 결과가 없습니다'})
     else:
         return redirect('/')
+
+def newreply(request):
+        if request.method == 'POST':
+                comment = Assessment()
+                comment.contents = request.POST['comment_body']
+                parse = request.POST['blog']
+                prof = parse.split('+')[1]
+                name = parse.split('+')[0]
+                course = Course.objects.get(name = name, prof = prof) 
+                comment.course = course                
+                comment.post = request.user
+                comment.star = request.POST['comment_stars']
+                comment.save()
+
+                count = course.count
+                course.count += 1
+                course.save()
+                print(count, course.count)
+                if course.stars:
+                    course.stars = round(((course.stars * count) + int(comment.star)) / course.count, 2)
+                else:
+                    course.stars = int(request.POST['comment_stars']) 
+                course.save()
+                return redirect('/posts/'+ str(comment.course.name)+ '/' + comment.course.prof, {'course' : course})
+        else :
+                return redirect('/posts') # 홈으로
