@@ -14,7 +14,9 @@
 
     <style>
         @import url("http://fonts.googleapis.com/earlyaccess/nanumgothic.css");
-	
+	.alert{
+    text-align: center;
+  }
 	html {
 		height: 100%;
 	}
@@ -94,7 +96,14 @@
     </div>
     
 
-  
+    {%if error %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert">
+      <strong>  {{error}}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {%endif%}
 
 
     <!-- Optional JavaScript -->
