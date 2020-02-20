@@ -13,7 +13,10 @@
 
     <style>
         @import url("http://fonts.googleapis.com/earlyaccess/nanumgothic.css");
-	
+	.alert{
+
+    text-align: center;
+  }
 	html {
 		height: 100%;
 	}
@@ -33,6 +36,10 @@
   		background-repeat: no-repeat;
   		background:linear-gradient(to bottom right, rgb(240, 180, 52), rgb(231, 62, 40));
 	}
+
+  button {
+    letter-spacing: 7px;
+  }
 
     a {
         font-family: "Nanum Gothic", arial, helvetica, sans-serif;
@@ -80,23 +87,24 @@
         <input type="password" name="password" class="form-control" placeholder="비밀번호" required><br>
         <input type="password" name="password2" class="form-control" placeholder="비밀번호 확인" required><br>
 
-        <button id="btn-Yes" class="btn btn-lg btn-primary btn-block" type="submit">회원가입</button>
-
-        
-        <!--<button id="btn-Yes" class="btn btn-lg btn-primary btn-block" type="submit"><a href="{%url 'logout' %}">로그아웃</a></button>-->
+        <button id="btn-Yes" class="btn btn-lg btn-primary btn-block" type="submit">회원가입</button>        
       </form>
+
 		</div>
     </div>
 
-
+  
     {%if error %}
-    {{error}}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert">
+      <strong>  {{error}}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
     {%endif%}
-    
 
-	<div class="modal">
-        ㅁㅇㄴ
-	</div>
+
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
