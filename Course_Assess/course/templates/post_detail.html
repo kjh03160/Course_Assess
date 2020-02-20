@@ -34,7 +34,7 @@
             <p>{{ comment.star }}</p>
 
             <small>{{ comment.created_date }}</small>
-            {% if comment.post == request.user %}<a href="{% url 'remove' name=name prof=prof pk=comment.pk %}">삭제</a>{% endif %}
+            {% if comment.post == request.user %}<a href="{% url 'remove' pk=comment.pk %}">삭제</a>{% endif %}
             <p>{{ comment.contents|linebreaks }}</p>
         </div>
         {% empty %}

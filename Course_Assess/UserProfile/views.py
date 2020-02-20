@@ -32,7 +32,7 @@ def login(request):
         user = auth.authenticate(request, username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            return redirect('/')
+            return redirect('post')
         else:
             return render(request, 'home.html', {'error':'학번 혹은 패스워드가 틀렸습니다'})
     else:

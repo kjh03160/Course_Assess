@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Course, Assessment
 from .crwal import crwal_Table
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 # Create your views here.
 def home(request):
-    return render(request, 'course.html')
+    return redirect('auth/')
 
 def db_push(request):
     crwal_Table.crwaling('20', '1')
@@ -82,25 +82,23 @@ def newreply(request):
     else :
             return redirect('/posts') # 홈으로
 
-def comment_remove(request, name, prof, pk):
-    print(1111111111111111111111111)
-    print(name, prof)
-    post = get_object_or_404(Course, name=name, prof=prof)
-    comment = Assessment.objects.get(pk=pk)
+def comment_remove(request, pk):
+    comment = get_object_or_404(Assessment, pk=pk)
+    post = get_object_or_404(Course, name=comment.course.name, prof=comment.course.prof)
     if not comment.post == request.user:
         return HttpResponseRedirect("/posts/{0}/{1}".format(post.name, post.prof))
     else:
         count = post.count
         assess = comment.star
+        comment.delete()
         temp = post.stars * count - assess
         count -= 1
-        post.stars = rount(temp / count, 2)
+        if count != 0:
+            post.stars = round(temp / count, 2)
+        else:
+            post.stars = None
         post.count = count
-        
         post.save()
-        print(post.name, post.prof)
 
-        comment.delete()
-        return HttpResponseRedirect("/posts/{0}/{1}".format(post.name, post.prof))
-        return redirect('/')
+        return redirect("/posts/{0}/{1}".format(post.name, post.prof))
 
