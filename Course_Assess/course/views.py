@@ -3,6 +3,8 @@ from .models import Course, Assessment
 from .crwal import crwal_Table
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+
+
 # Create your views here.
 def home(request):
     return redirect('auth/')
@@ -16,7 +18,6 @@ def course_list(request):
     return render(request, 'post.html', {'courses':courses})
 
 def post_view(request, name, prof):
-    print(name, '+++', prof)
     course = Course.objects.get(name=name, prof=prof)
     # print(course.comments)
     course_name = course.name
@@ -59,15 +60,18 @@ def search_by_course(request):
 
 def newreply(request):
     if request.method == 'POST':
-            comment = Assessment()
-            comment.contents = request.POST['comment_body']
+        try:
             parse = request.POST['blog']
             prof = parse.split('+')[1]
             name = parse.split('+')[0]
+            objs = Assessment.objects.get(post=request.user).post
+        except:
+            comment = Assessment()
+            comment.contents = request.POST['comment_body']
             course = Course.objects.get(name = name, prof = prof) 
             comment.course = course                
             comment.post = request.user
-            comment.star = request.POST['comment_stars']
+            comment.star = request.POST['rating']
             comment.save()
 
             count = course.count
@@ -76,9 +80,13 @@ def newreply(request):
             if course.stars:
                 course.stars = round(((course.stars * count) + int(comment.star)) / course.count, 2)
             else:
-                course.stars = int(request.POST['comment_stars']) 
+                course.stars = int(request.POST['rating']) 
             course.save()
-            return redirect('/posts/'+ str(comment.course.name)+ '/' + comment.course.prof, {'course' : course})
+            return redirect('/posts/'+ comment.course.name + '/' + comment.course.prof, {'course' : course})
+
+        else:
+            print(1)
+            return redirect('/posts/'+ name+ '/' + prof, {'error' : '이미 강의평을 등록하셨습니다!'})
     else :
             return redirect('/posts') # 홈으로
 

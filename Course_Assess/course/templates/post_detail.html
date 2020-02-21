@@ -4,11 +4,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <title>Document</title>
+
+
+<style>
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+fieldset, label { margin: 0; padding: 0; }
+body{ margin: 20px; }
+h1 { font-size: 1.5em; margin: 10px; }
+
+/****** Style Star Rating Widget *****/
+
+.rating { 
+  border: none;
+  float: left;
+}
+
+.rating > input { display: none; } 
+.rating > label:before { 
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating > .half:before { 
+  content: "\f089";
+  position: absolute;
+}
+
+.rating > label { 
+  color: #ddd; 
+ float: right; 
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+</style>
+
+
+
 </head>
 
 <body>
 
+{{error}}
+
+    {% if error %}
+    <div class="alert alert-primary">
+        Click X to Close
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    {% endif %}
     <div class="side head">
         <h2>{{name}}</h2>
         <p><label>학과</label><span> {{dept}}</span></p>
@@ -17,23 +82,46 @@
         <p class="semesters"><label>평점</label><span>{{stars}}</span></p>
         <hr>
     </div>
+    평가 작성 :
 
     <form method="POST" action="/posts/newreply">
         {% csrf_token %}
         <input type="hidden" value="{{name}}+{{prof}}" name="blog">
-        평가 작성 : <input type="text" name="comment_body"></input>
-        <input type="text" name="comment_stars"></input>
-        <button type="submit" class="btn btn-secondary">작성</button>
+        <fieldset class="rating">
+            <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5"
+                title="Awesome - 5 stars"></label>
+            <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4"
+                title="Pretty good - 4 stars"></label>
+
+            <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3"
+                title="Meh - 3 stars"></label>
+
+            <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2"
+                title="Kinda bad - 2 stars"></label>
+
+            <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1"
+                title="Sucks big time - 1 star"></label>
+            </fieldset>
+
+             <textarea type="text" name="comment_body"></textarea>
+
+
+            <button type="submit" class="btn btn-secondary">작성</button>
     </form>
 
+
+
+
+
+
     <div id="comment">
-        
+
         {% for comment in post.course_comments.all %}
         <div class="comment-list">
-            <a href="#">{{ comment.post }}</a>
+            <p class="user">{{ comment.post }}</p>
             <p>{{ comment.star }}</p>
 
-            <small>{{ comment.created_date }}</small>
+            <small>{{ comment.created_date|date:"y년 n월" }}</small>
             {% if comment.post == request.user %}<a href="{% url 'remove' pk=comment.pk %}">삭제</a>{% endif %}
             <p>{{ comment.contents|linebreaks }}</p>
         </div>
@@ -46,5 +134,25 @@
 
 
 </body>
+
+<script>
+    function textLengthOverCut(txt, len, lastTxt) {
+        if (len == "" || len == null) { // 기본값
+            len = 20;
+        }
+        if (lastTxt == "" || lastTxt == null) { // 기본값
+            lastTxt = "...";
+        }
+        if (txt.length > len) {
+            txt = txt.substr(0, len) + lastTxt;
+        }
+        return txt;
+    }
+    $( document ).ready( function(){
+        var text = $('.user').text()
+        text = text[2] + text[3]
+        $('.user').text(text);} );
+
+</script>
 
 </html>
