@@ -12,50 +12,183 @@
     <title>Document</title>
 
 
-<style>
-@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+    <style>
+        @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
-fieldset, label { margin: 0; padding: 0; }
-body{ margin: 20px; }
-h1 { font-size: 1.5em; margin: 10px; }
+        fieldset,
+        label {
+            margin: 0;
+            padding: 0;
+        }
 
-/****** Style Star Rating Widget *****/
+        body {
+            margin: 20px;
+        }
 
-.rating { 
-  border: none;
-  float: left;
+        h1 {
+            font-size: 1.5em;
+            margin: 10px;
+        }
+
+        /****** Style Star Rating Widget *****/
+
+        .rating {
+            border: none;
+            float: left;
+        }
+
+        .rating>input {
+            display: none;
+        }
+
+        .rating>label:before {
+            margin: 5px;
+            font-size: 1.25em;
+            font-family: FontAwesome;
+            display: inline-block;
+            content: "\f005";
+        }
+
+        .rating>.half:before {
+            content: "\f089";
+            position: absolute;
+        }
+
+        .rating>label {
+            color: #ddd;
+            float: right;
+        }
+
+        /***** CSS Magic to Highlight Stars on Hover *****/
+
+        .rating>input:checked~label,
+        /* show gold star when clicked */
+        .rating:not(:checked)>label:hover,
+        /* hover current star */
+        .rating:not(:checked)>label:hover~label {
+            color: #FFD700;
+        }
+
+        /* hover previous stars in list */
+
+        .rating>input:checked+label:hover,
+        /* hover current star when changing rating */
+        .rating>input:checked~label:hover,
+        .rating>label:hover~input:checked~label,
+        /* lighten current selection */
+        .rating>input:checked~label:hover~label {
+            color: #FFED85;
+        }
+
+
+        body {
+            padding: 40px;
+        }
+
+        .page-header {
+            background: #f9f9f9;
+            margin: -30px -40px 40px;
+            padding: 20px 40px;
+            border-top: 4px solid #ccc;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .page-header h3 {
+            line-height: 0.88rem;
+            color: #000;
+            margin-bottom: 40px;
+        }
+
+        div.side-article {
+            margin: 0 8px 8px 8px;
+            padding: 24px 10px 12px 10px;
+            border: 1px solid #ededed;
+            border-radius: 12px;
+            box-sizing: border-box;
+            width: 300px;
+            float: left;
+		    height: 400px;
+        }
+
+
+        html {
+        font-family: 'GmarketSansMedium' !important;
+            height: 100%;
+            /* overflow: hidden; */
+        }
+
+
+        textarea {
+            width: 200px;
+            height: 300px;
+            text-align: left;
+        }
+
+        div.side.exam {
+            
+            margin: 0 8px 8px 8px;
+            padding: 24px 10px 12px 10px;
+            border: 1px solid #ededed;
+            border-radius: 12px;
+            box-sizing: border-box;
+            float: left;
+            margin-left: 10px;
+            width: 200px;
+        }
+        .alert {
+            width:320px !important;
+            text-align: center;
+        }
+        .write{
+            /* float: left; */
+            position: relative;
+            /* width: 200px; */
+        }
+
+
+        textarea:focus { 
+	  background-color: rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0 5px 1px rgba(255,255,255,.5);
+    -webkit-box-shadow: 0 0 5px 1px rgba(255,255,255,.5);
+    box-shadow: 0 0 5px 1px rgba(255,255,255,.5);
+	  overflow: hidden; 
+}
+        textarea{
+	  background: rgba(112, 105, 105, 0.4) url(http://luismruiz.com/img/gemicon_message.png) no-repeat scroll 16px 16px; 
+    width: 275px;
+    height: 240px;
+    border: 1px solid rgba(47, 130, 224, 0.192);
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box; 
+    display:block;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size:18px;
+    color:rgba(71, 68, 68, 0.795);
+    padding-left:45px;
+    padding-right:20px;
+    padding-top:12px;
+    margin-bottom:20px;
+    overflow:hidden;
 }
 
-.rating > input { display: none; } 
-.rating > label:before { 
-  margin: 5px;
-  font-size: 1.25em;
-  font-family: FontAwesome;
-  display: inline-block;
-  content: "\f005";
+
+.user {
+    float: left;
+    width: 50px;
+}
+button small{
+    float: right;
 }
 
-.rating > .half:before { 
-  content: "\f089";
-  position: absolute;
-}
+@font-face { font-family: 'GmarketSansMedium'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff'); font-weight: normal; font-style: normal; }
 
-.rating > label { 
-  color: #ddd; 
- float: right; 
-}
 
-/***** CSS Magic to Highlight Stars on Hover *****/
-
-.rating > input:checked ~ label, /* show gold star when clicked */
-.rating:not(:checked) > label:hover, /* hover current star */
-.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
-
-.rating > input:checked + label:hover, /* hover current star when changing rating */
-.rating > input:checked ~ label:hover,
-.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
-</style>
+    </style>
 
 
 
@@ -63,65 +196,71 @@ h1 { font-size: 1.5em; margin: 10px; }
 
 <body>
 
-{{error}}
+
+
+
+
+
+    <div class="page-header">
+        <h3>{{course.name}} - {{course.prof}}</h3>
+        <p> <strong>{{course.dept}}</strong></p>
+        <p><strong>{{course.year}}학년</strong></p>
+        <p>평점 : <strong>{{course.stars}}</strong></p>
+    </div>
 
     {% if error %}
     <div class="alert alert-primary">
-        Click X to Close
+        {{error}}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
 
     {% endif %}
-    <div class="side head">
-        <h2>{{name}}</h2>
-        <p><label>학과</label><span> {{dept}}</span></p>
-        <p><label>학년</label><span> {{year}}</span></p>
-        <p><label>교수명</label><span> {{prof}}</span></p>
-        <p class="semesters"><label>평점</label><span>{{stars}}</span></p>
-        <hr>
-    </div>
-    평가 작성 :
 
-    <form method="POST" action="/posts/newreply">
-        {% csrf_token %}
-        <input type="hidden" value="{{name}}+{{prof}}" name="blog">
-        <fieldset class="rating">
-            <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5"
-                title="Awesome - 5 stars"></label>
-            <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4"
-                title="Pretty good - 4 stars"></label>
+    <div class="side-article">
 
-            <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3"
-                title="Meh - 3 stars"></label>
+        <form method="POST" action="/posts/newreply">
+            {% csrf_token %}
 
-            <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2"
-                title="Kinda bad - 2 stars"></label>
+            <input type="hidden" value="{{course.name}}+{{course.prof}}" name="blog">
+                <div class="write"> 평가 작성 :</div>
 
-            <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1"
-                title="Sucks big time - 1 star"></label>
-            </fieldset>
+                <fieldset class="rating">
+                    <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5"
+                        title="Awesome - 5 stars"></label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4"
+                        title="Pretty good - 4 stars"></label>
 
-             <textarea type="text" name="comment_body"></textarea>
+                    <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3"
+                        title="Meh - 3 stars"></label>
+
+                    <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2"
+                        title="Kinda bad - 2 stars"></label>
+
+                    <input type="radio" id="star1" name="rating" value="1" required /><label class="full" for="star1"
+                        title="Sucks big time - 1 star"></label>
+                </fieldset>
+                <textarea type="text" name="comment_body" placeholder="강의평가를 해주세요!"  required></textarea>
+                <button type="submit" class="btn btn-secondary">작성</button>
 
 
-            <button type="submit" class="btn btn-secondary">작성</button>
-    </form>
+        </form>
+    
+</div>
 
 
 
 
+{% for comment in course.course_comments.all %}
+        <div class="side exam">
 
-
-    <div id="comment">
-
-        {% for comment in post.course_comments.all %}
         <div class="comment-list">
-            <p class="user">{{ comment.post }}</p>
+            <p class="user">{{ comment.post }}학번</p>
+            <small>{{ comment.created_date|date:"y년 n월 작성" }}</small>
+
             <p>{{ comment.star }}</p>
 
-            <small>{{ comment.created_date|date:"y년 n월" }}</small>
             {% if comment.post == request.user %}<a href="{% url 'remove' pk=comment.pk %}">삭제</a>{% endif %}
             <p>{{ comment.contents|linebreaks }}</p>
         </div>
@@ -133,6 +272,9 @@ h1 { font-size: 1.5em; margin: 10px; }
     </div>
 
 
+
+
+        
 </body>
 
 <script>
@@ -148,10 +290,11 @@ h1 { font-size: 1.5em; margin: 10px; }
         }
         return txt;
     }
-    $( document ).ready( function(){
+    $(document).ready(function () {
         var text = $('.user').text()
         text = text[2] + text[3]
-        $('.user').text(text);} );
+        $('.user').text(text);
+    });
 
 </script>
 

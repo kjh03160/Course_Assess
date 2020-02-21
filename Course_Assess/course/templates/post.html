@@ -227,28 +227,16 @@ input:-moz-placeholder {
 
                 <div class="flexsearch">
                     <div class="flexsearch--wrapper">
-                        <form class="flexsearch--form" action="{% url 'course' %}" method="POST">
+                        <form class="flexsearch--form" action="{% url 'search' %}" method="POST">
                             {% csrf_token %}
 
                             <div class="flexsearch--input-wrapper">
-                                <input class="flexsearch--input" type="search" placeholder="강의명">
+                                <input name ="q" class="flexsearch--input" type="search" placeholder="강의/교수명">
                             </div>
                             <input class="flexsearch--submit" type="submit" value="&#10140;"/>
                         </form>
                     </div>
             </div>
-            <div class="flexsearch">
-                <div class="flexsearch--wrapper">
-                    <form class="flexsearch--form" action="{% url 'prof' %}" method="POST">
-                        {% csrf_token %}
-
-                        <div class="flexsearch--input-wrapper">
-                            <input class="flexsearch--input" name="prof" type="search" placeholder="교수명">
-                        </div>
-                        <input class="flexsearch--submit" type="submit" value="&#10140;"/>
-                    </form>
-                </div>
-        </div>
         <section>
 
                 <div class="tbl-header">
@@ -273,14 +261,17 @@ input:-moz-placeholder {
                         <tr>
                         <th width="80px">{{ course.dept }}</th>
                         <th width="30px">{{ course.year }}</th>
+                        
                         <th width="350px"><a href='{% url "detail" name=course.name prof=course.prof %}'> {{ course.name }} </a></th>
                         <th width="50px"><a href='{{ course.syllabus }}'>계획서</a></th>
                         <th width="80px">{{ course.prof }}</th>
                         <th width="30px">{{ course.credit }}</th>
                         <th width="50px">{{ course.stars }}</th>
                           </tr>
+                          
+                        {% empty %}
+                        <tr><td>Nothing to show!</td></tr>
                         {% endfor %}
-
 
 
 
@@ -304,5 +295,11 @@ input:-moz-placeholder {
               <i>★</i> by
               <a target="_blank" href="https://www.instagram.com/juna_km/">Junha Kim</a>
             </div> -->
+
+
+
+
+
+            
 </body>
 </html>
