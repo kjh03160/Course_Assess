@@ -1,16 +1,35 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Course, Assessment
-from .crwal import crwal_Table
+from .crwal import crwal_Table, crwal_Table2
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.db.models import Q
+from django.contrib.auth.models import User
+from django.contrib import auth
 
 # Create your views here.
 def home(request):
     return redirect('auth/')
 
+def setting(request):
+    if request.user.is_staff:
+        return render(request, 'course.html')
+    
+    courses = Course.objects.all().order_by('year')
+    return render(request, 'post.html', {'courses':courses, 'error' : '접근 권한이 없습니다!'})
+
 def db_push(request):
-    crwal_Table.crwaling('20', '1')
+    year = request.GET.get('year')
+    semester = request.GET.get('semester')
+    crwal_Table.crwaling(year, semester)
+    # crwal_Table2.crwaling(year, semester)
+    return redirect('/')
+
+def db_push2(request):
+    year = request.GET.get('year2')
+    semester = request.GET.get('semester2')
+    crwal_Table2.crwaling(year, semester)
+
     return redirect('/')
 
 def course_list(request):

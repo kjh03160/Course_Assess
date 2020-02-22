@@ -5,7 +5,10 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('setting/', views.setting, name='setting'),
     path('crwal/', views.db_push, name='crwal'),
+    path('crwal2/', views.db_push2, name='crwal2'),
+
     path('posts', views.course_list, name='post'),
     url(r'^posts/(?P<name>.+)/(?P<prof>.+)/$', views.post_view, name='detail'),
     path('posts_search', views.search, name='search'),

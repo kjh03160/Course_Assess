@@ -40,7 +40,7 @@ table{
 }
 th{
   padding: 20px 15px;
-  text-align: center;
+  text-align: center !important;
   font-weight: 500;
   font-size: 12px;
   font-weight: 1000;
@@ -58,7 +58,7 @@ td{
   word-break: keep-all;
 }
 a {
-      color: #c2306d;
+      color: #663f4f !important;
       text-decoration: none
     }
 
@@ -215,16 +215,39 @@ input:-moz-placeholder {
   color: #888
 }
 
+.alert {
+            width: 320px !important;
+            text-align: center;
+        }
+img {
+  width: 20px;
+  height: 20px;
+}
 
-
-
+        @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 </style>
-</head>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+  </head>
 <body>
                 <!--for demo wrap-->
                 <h1>Course List</h1>
 
+                {%if error %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert">
+                  <strong>  {{error}}</strong>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                {%endif%}
+
+<a href="{% url 'setting' %}"><button>DB업데이트</button></a>
                 <div class="flexsearch">
                     <div class="flexsearch--wrapper">
                         <form class="flexsearch--form" action="{% url 'search' %}" method="POST">
@@ -263,10 +286,15 @@ input:-moz-placeholder {
                         <th width="30px">{{ course.year }}</th>
                         
                         <th width="350px"><a href='{% url "detail" name=course.name prof=course.prof %}'> {{ course.name }} </a></th>
-                        <th width="50px"><a href='{{ course.syllabus }}'>계획서</a></th>
+                        <th width="50px"><a href='{{ course.syllabus }}'><img src='https://icon-icons.com/icons2/1367/PNG/32/32officeicons-7_89710.png'></a></th>
                         <th width="80px">{{ course.prof }}</th>
                         <th width="30px">{{ course.credit }}</th>
+                        {% if course.stars %}
                         <th width="50px">{{ course.stars }}</th>
+                        {%else%}
+                        <th width="50px">없음</th>
+                        {%endif%}
+
                           </tr>
                           
                         {% empty %}

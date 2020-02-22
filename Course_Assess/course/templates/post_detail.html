@@ -108,12 +108,12 @@
             box-sizing: border-box;
             width: 300px;
             float: left;
-		    height: 400px;
+            height: 400px;
         }
 
 
         html {
-        font-family: 'GmarketSansMedium' !important;
+            font-family: 'GmarketSansMedium' !important;
             height: 100%;
             /* overflow: hidden; */
         }
@@ -126,7 +126,7 @@
         }
 
         div.side.exam {
-            
+
             margin: 0 8px 8px 8px;
             padding: 24px 10px 12px 10px;
             border: 1px solid #ededed;
@@ -136,56 +136,82 @@
             margin-left: 10px;
             width: 200px;
         }
+
         .alert {
-            width:320px !important;
+            width: 320px !important;
             text-align: center;
         }
-        .write{
+
+        .write {
             /* float: left; */
             position: relative;
             /* width: 200px; */
         }
 
 
-        textarea:focus { 
-	  background-color: rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 0 0 5px 1px rgba(255,255,255,.5);
-    -webkit-box-shadow: 0 0 5px 1px rgba(255,255,255,.5);
-    box-shadow: 0 0 5px 1px rgba(255,255,255,.5);
-	  overflow: hidden; 
-}
-        textarea{
-	  background: rgba(112, 105, 105, 0.4) url(http://luismruiz.com/img/gemicon_message.png) no-repeat scroll 16px 16px; 
-    width: 275px;
-    height: 240px;
-    border: 1px solid rgba(47, 130, 224, 0.192);
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    -moz-background-clip: padding;
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box; 
-    display:block;
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size:18px;
-    color:rgba(71, 68, 68, 0.795);
-    padding-left:45px;
-    padding-right:20px;
-    padding-top:12px;
-    margin-bottom:20px;
-    overflow:hidden;
-}
+        textarea:focus {
+            background-color: rgba(0, 0, 0, 0.2);
+            -moz-box-shadow: 0 0 5px 1px rgba(255, 255, 255, .5);
+            -webkit-box-shadow: 0 0 5px 1px rgba(255, 255, 255, .5);
+            box-shadow: 0 0 5px 1px rgba(255, 255, 255, .5);
+            overflow: hidden;
+        }
+
+        textarea {
+            background: rgba(112, 105, 105, 0.4) url(http://luismruiz.com/img/gemicon_message.png) no-repeat scroll 16px 16px;
+            width: 275px;
+            height: 240px;
+            border: 1px solid rgba(47, 130, 224, 0.192);
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            -moz-background-clip: padding;
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            display: block;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 18px;
+            color: rgba(71, 68, 68, 0.795);
+            padding-left: 45px;
+            padding-right: 20px;
+            padding-top: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
 
 
-.user {
-    float: left;
-    width: 50px;
-}
-button small{
-    float: right;
-}
+        .user {
+            float: left;
+            width: 50px;
+        }
 
-@font-face { font-family: 'GmarketSansMedium'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff'); font-weight: normal; font-style: normal; }
+        button small {
+            float: right;
+        }
+
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+
+        .star-rating {
+            display: inline-block;
+    width: 60px;
+    height: 12px;
+    background: transparent url('https://everytime.kr/images/app.subject.rating.details.star.off.png') no-repeat left top;
+    background-size: 60px 12px;
+        }
+        
+        .star-rating span {
+            float: left;
+    display: block;
+    height: 12px;
+    background: transparent url('https://everytime.kr/images/app.subject.rating.details.star.on.png') no-repeat left top;
+    background-size: 60px 12px;
+        }
 
 
     </style>
@@ -224,42 +250,48 @@ button small{
             {% csrf_token %}
 
             <input type="hidden" value="{{course.name}}+{{course.prof}}" name="blog">
-                <div class="write"> 평가 작성 :</div>
+            <div class="write"> 평가 작성 :</div>
 
-                <fieldset class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5"
-                        title="Awesome - 5 stars"></label>
-                    <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4"
-                        title="Pretty good - 4 stars"></label>
+            <fieldset class="rating">
+                <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5"
+                    title="Awesome - 5 stars"></label>
+                <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4"
+                    title="Pretty good - 4 stars"></label>
 
-                    <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3"
-                        title="Meh - 3 stars"></label>
+                <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3"
+                    title="Meh - 3 stars"></label>
 
-                    <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2"
-                        title="Kinda bad - 2 stars"></label>
+                <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2"
+                    title="Kinda bad - 2 stars"></label>
 
-                    <input type="radio" id="star1" name="rating" value="1" required /><label class="full" for="star1"
-                        title="Sucks big time - 1 star"></label>
-                </fieldset>
-                <textarea type="text" name="comment_body" placeholder="강의평가를 해주세요!"  required></textarea>
-                <button type="submit" class="btn btn-secondary">작성</button>
+                <input type="radio" id="star1" name="rating" value="1" required /><label class="full" for="star1"
+                    title="Sucks big time - 1 star"></label>
+            </fieldset>
+            <textarea type="text" name="comment_body" placeholder="강의평가를 해주세요!" required></textarea>
+            <button type="submit" class="btn btn-secondary">작성</button>
 
 
         </form>
-    
-</div>
+
+    </div>
 
 
 
 
-{% for comment in course.course_comments.all %}
-        <div class="side exam">
+    {% for comment in course.course_comments.all %}
+    <div class="side exam">
 
         <div class="comment-list">
             <p class="user">{{ comment.post }}학번</p>
             <small>{{ comment.created_date|date:"y년 n월 작성" }}</small>
 
-            <p>{{ comment.star }}</p>
+          
+
+            <p class="stars{{comment.post}}">{{ comment.star }}
+                <span class='star-rating'>
+                    <span class="star-{{comment.post}}"></span>
+                </span>
+            </p>
 
             {% if comment.post == request.user %}<a href="{% url 'remove' pk=comment.pk %}">삭제</a>{% endif %}
             <p>{{ comment.contents|linebreaks }}</p>
@@ -274,26 +306,25 @@ button small{
 
 
 
-        
+
 </body>
 
 <script>
-    function textLengthOverCut(txt, len, lastTxt) {
-        if (len == "" || len == null) { // 기본값
-            len = 20;
-        }
-        if (lastTxt == "" || lastTxt == null) { // 기본값
-            lastTxt = "...";
-        }
-        if (txt.length > len) {
-            txt = txt.substr(0, len) + lastTxt;
-        }
-        return txt;
-    }
     $(document).ready(function () {
         var text = $('.user').text()
         text = text[2] + text[3]
         $('.user').text(text);
+    });
+
+    var num = document.getElementsByClassName("star-rating").length;
+
+    $(document).ready(function () {
+        var text1 = $('.user').text()
+        console.log(text1)
+        var text = parseInt($('.stars' + text1).text())
+        console.log(text)
+        text = text * 20
+        $('.star-' + $('.user').text()).css('width', String(text) + '%');
     });
 
 </script>

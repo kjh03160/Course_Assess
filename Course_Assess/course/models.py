@@ -10,8 +10,8 @@ class Course(models.Model):
     prof = models.CharField(max_length=100)
     credit = models.IntegerField()
     stars = models.FloatField(null=True)
-    year = models.IntegerField()
-    count = models.IntegerField()
+    year = models.CharField(max_length=10, null=True)
+    count = models.IntegerField(null=True)
 
     class Meta:
         unique_together =  ('name', 'prof')
