@@ -10,7 +10,7 @@ class Course(models.Model):
     prof = models.CharField(max_length=100)
     credit = models.IntegerField()
     stars = models.FloatField(null=True)
-    year = models.CharField(max_length=10, null=True)
+    year = models.IntegerField(null=True)
     count = models.IntegerField(null=True)
 
     class Meta:

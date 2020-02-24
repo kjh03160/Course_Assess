@@ -283,10 +283,14 @@ img {
                         {% for course in courses %}
                         <tr>
                         <th width="80px">{{ course.dept }}</th>
+                        {% if course.year %}
                         <th width="30px">{{ course.year }}</th>
+        {%else%}
+        <th width="30px">-</th>
+        {%endif%}
                         
                         <th width="350px"><a href='{% url "detail" name=course.name prof=course.prof %}'> {{ course.name }} </a></th>
-                        <th width="50px"><a href='{{ course.syllabus }}'><img src='https://icon-icons.com/icons2/1367/PNG/32/32officeicons-7_89710.png'></a></th>
+                        <th width="50px"><a href='{{ course.syllabus }}' target="_blank"><img src='https://icon-icons.com/icons2/1367/PNG/32/32officeicons-7_89710.png'></a></th>
                         <th width="80px">{{ course.prof }}</th>
                         <th width="30px">{{ course.credit }}</th>
                         {% if course.stars %}

@@ -256,7 +256,6 @@
             font-size: 20px;
 
         }
-
     </style>
 
 
@@ -278,30 +277,15 @@
         {%else%}
         <p><strong>-</strong></p>
         {%endif%}
-        <p>평점 : 
-            {%if star_ %}
-            <strong class="size"><span class='main'>
+        <p>평점 : <strong class="size"><span class='main'>
                     <span class="main2" style="width: {{star_}}%;"></span>
-                </span>{{course.stars}}</strong>
-            {%else%}
-            <strong>없음</strong>
-        {%endif%}    
-        </p>
+                </span>{{course.stars}}</strong></p>
     </div>
 
-    {% if error %}
-    <div class="alert alert-primary">
-        {{error}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-
-    {% endif %}
 
     <div class="side-article">
 
-        <form method="POST" action="/posts/newreply">
+        <form method="POST">
             {% csrf_token %}
 
             <input type="hidden" value="{{course.name}}+{{course.prof}}" name="blog">
@@ -322,45 +306,13 @@
                 <input type="radio" id="star1" name="rating" value="1" required /><label class="full" for="star1"
                     title="Sucks big time - 1 star"></label>
             </fieldset>
-            <textarea type="text" name="comment_body" placeholder="강의평가를 해주세요!" required></textarea>
+            <textarea type="text" name="comment_body" placeholder="강의평가를 해주세요!" required>{{content}}</textarea>
             <button type="submit" class="btn btn-secondary">작성</button>
 
 
         </form>
 
     </div>
-
-
-
-
-    <div class="side exam">
-        {% for comment in comment_list %}
-
-        <div class="comment-list">
-            <p class="user">{{comment.user|make_list|slice:"2:4"|join:""}}학번</p>
-            <small style="margin:5px;">{{ comment.created_date|date:"y.n 작성" }}</small>
-            {% if comment.user == request.user %}<div class="delete"><a href="{% url 'update' pk=comment.pk %}" style="margin-right: 2px;">수정</a><a href="{% url 'remove' pk=comment.pk %}">삭제</a>
-                </div>{% endif %}
-            <p class="stars">
-                <span class='star-rating'>
-                    <span class="star_" style="width: {{comment.star_span}}%;"></span>
-                </span>
-                {{ comment.star }}
-            </p>
-
-            
-            <div class="content">{{ comment.contents }}</div>
-        </div>
-        {% empty %}
-        <div class="side exam">
-        <div class="comment-list">
-            <p>작성된 평가가 없습니다!</p>
-        </div>
-    </div>
-    {% endfor %}
-
-    </div>
-
 
 
 

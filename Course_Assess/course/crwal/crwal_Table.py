@@ -95,10 +95,11 @@ def crwaling(rq_year, rq_semester):
 
         for i in trs:
             tds = i.findAll('td')
+            year = None
             try:
                 year = int(tds[2].get_text().strip())
             except:
-                year = ' '
+                year = None
 
             subject = tds[4].get_text().strip().splitlines()
             subject = " ".join(subject)

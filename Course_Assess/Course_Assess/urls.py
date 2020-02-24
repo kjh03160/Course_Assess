@@ -12,6 +12,8 @@ urlpatterns = [
     path('posts', views.course_list, name='post'),
     url(r'^posts/(?P<name>.+)/(?P<prof>.+)/$', views.post_view, name='detail'),
     path('posts_search', views.search, name='search'),
+    path('posts_update/<int:pk>', views.comment_update, name='update'),
+
     # path('posts_search_by_course', views.search_by_course, name='course'),
     path('posts/newreply',views.newreply, name="newreply"),
     # url(r'^posts/(?P<name>.+)/(?P<prof>.+)/remove/(?P<pk>\d+)/$', views.comment_remove, name='comment_remove'),

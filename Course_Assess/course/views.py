@@ -6,6 +6,7 @@ from django.template.loader import render_to_string
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib import auth
+from .forms import CommentForm
 
 # Create your views here.
 def home(request):
@@ -38,8 +39,26 @@ def course_list(request):
 
 def post_view(request, name, prof):
     course = Course.objects.get(name=name, prof=prof)
+    
+    star_ = None
+    if course.stars:
+        star_ = course.stars * 20
+    
+    comments = course.course_comments.all()
+    comment_list = []
+    for i in comments:
+        obj = {}
+        obj['user'] = i.post
+        obj['star'] = i.star
+        obj['star_span'] = int(i.star) * 20
+        obj['created_date'] = i.created_date
+        obj['contents'] = i.contents
+        obj['pk'] = i.pk
+        comment_list.append(obj)
     context = {
         'course' : course,
+        'comment_list' : comment_list,
+        'star_' : star_
     }
     return render(request, 'post_detail.html', context)
 
@@ -73,7 +92,10 @@ def newreply(request):
             comment.save()
 
             count = course.count
-            course.count += 1
+            if count:
+                course.count += 1
+            else:
+                course.count = 1
             course.save()
             if course.stars:
                 course.stars = round(((course.stars * count) + int(comment.star)) / course.count, 2)
@@ -83,7 +105,6 @@ def newreply(request):
             return redirect('/posts/'+ comment.course.name + '/' + comment.course.prof)
 
         else:
-            print(1)
             context = {
                 'course' : course,
                 'error' : '이미 강의평을 등록하셨습니다!'
@@ -111,4 +132,28 @@ def comment_remove(request, pk):
         post.save()
 
         return redirect("/posts/{0}/{1}".format(post.name, post.prof))
+
+
+def comment_update(request, pk):
+    comment = get_object_or_404(Assessment, pk=pk)
+    course = comment.course
+    prof = comment.course.prof
+    name = comment.course.name
+    star_ = course.stars * 20
+
+    if request.method == "POST":
+        before = course.stars
+        after = request.POST['rating']
+        comment.star = request.POST['rating']
+        comment.contents = request.POST['comment_body']
+        course.stars = round(((course.stars * course.count) - before + int(after)) / course.count, 2)
+        course.save()
+        comment.save()
+        return redirect('detail', name = name, prof = prof)
+    else:
+        stars = comment.star
+        content = comment.contents
+    
+    return render(request, 'comment_update.html', { 'course' : course, 'star_' : star_, 'stars' : stars, 'content' : content})
+
 
