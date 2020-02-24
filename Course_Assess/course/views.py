@@ -77,11 +77,12 @@ def search(request):
 
 
 def newreply(request):
+    parse = request.POST['blog']
+    prof = parse.split('+')[1]
+    name = parse.split('+')[0]
+    course = Course.objects.get(name = name, prof = prof)
     if request.method == 'POST':
-        parse = request.POST['blog']
-        prof = parse.split('+')[1]
-        name = parse.split('+')[0]
-        course = Course.objects.get(name = name, prof = prof)
+        
         try:
             objs = Assessment.objects.get(post=request.user, course=course).post
         except:
@@ -106,9 +107,23 @@ def newreply(request):
             return redirect('/posts/'+ comment.course.name + '/' + comment.course.prof)
 
         else:
+            
+            comments = course.course_comments.all()
+            comment_list = []
+            for i in comments:
+                obj = {}
+                obj['user'] = i.post
+                obj['star'] = i.star
+                obj['star_span'] = int(i.star) * 20
+                obj['created_date'] = i.created_date
+                obj['contents'] = i.contents
+                obj['pk'] = i.pk
+                comment_list.append(obj)
             context = {
                 'course' : course,
-                'error' : '이미 강의평을 등록하셨습니다!'
+                'error' : '이미 강의평을 등록하셨습니다!',
+                'comment_list' : comment_list,
+
                 }
             return render(request, 'post_detail.html', context)
     else :
