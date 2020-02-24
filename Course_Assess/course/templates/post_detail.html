@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <title>Document</title>
+    <title>강의평 보기</title>
 
 
     <style>
@@ -87,21 +87,21 @@
 
         .page-header {
             background: #f9f9f9;
-            margin: -30px -40px 40px;
+            margin-top: 20px;
             padding: 20px 40px;
             border-top: 4px solid #ccc;
             color: #999;
             text-transform: uppercase;
         }
 
-        .page-header h3 {
+        .page-header h4 {
             line-height: 0.88rem;
             color: #000;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         div.side-article {
-            margin: 0 8px 8px 8px;
+            margin: 20px 8px 8px 8px;
             padding: 24px 10px 12px 10px;
             border: 1px solid #ededed;
             border-radius: 12px;
@@ -127,7 +127,7 @@
 
         div.side.exam {
 
-            margin: 0 8px 8px 8px;
+            margin: 20px 8px 8px 8px;
             padding: 24px 10px 12px 10px;
             border: 1px solid #ededed;
             border-radius: 12px;
@@ -256,22 +256,56 @@
             font-size: 20px;
 
         }
+        nav {
+            position: absolute !important;
+            top: 0%;
+            background-color: white !important;
+            width: 100%;
+            left: -10px;
+        }
 
     </style>
 
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'post' %}">강의평가</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'logout' %}">로그아웃</a>
+            </li>
+            {%else%}
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'home' %}">로그인</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'signup_page' %}">회원가입</a>
+            </li>
+            {% endif %}
+        </div>
+      </nav>
 
 
 
 
-
-
+      {% if user.is_authenticated %}
     <div class="page-header">
-        <h3>{{course.name}} - {{course.prof}}</h3>
+        <h4>{{course.name}} - {{course.prof}}</h4>
         <p> <strong>{{course.dept}}</strong></p>
         {% if course.year %}
         <p><strong>{{course.year}}학년</strong></p>
@@ -367,5 +401,14 @@
 
 </body>
 
+{% else %}
+
+
+<script type="text/javascript">
+    alert('로그인이 필요합니다.')
+    window.location.href = '/auth/login';
+
+  </script>
+{% endif %}
 
 </html>

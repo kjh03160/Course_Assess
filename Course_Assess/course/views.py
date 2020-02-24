@@ -10,7 +10,8 @@ from .forms import CommentForm
 
 # Create your views here.
 def home(request):
-    return redirect('auth/')
+    return redirect('post')
+
 
 def setting(request):
     if request.user.is_staff:

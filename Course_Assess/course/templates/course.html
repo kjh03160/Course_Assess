@@ -1,9 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DB Update</title>
+</head>
+<body>
+
+
+    {% if user.is_authenticated %}
 
 
 
-
-        <form method="GET" action="/crwal">
-            <input name="year" / >
+    <form method="GET" action="/crwal">
+        <input name="year" / >
 <input name="semester" / >
 
 
@@ -17,3 +27,20 @@
 
 
 <input type="submit" value="교양 크롤링하기" / > </form> -->
+
+
+
+    
+</body>
+
+
+{% else %}
+
+
+<script type="text/javascript">
+alert('로그인이 필요합니다.')
+window.location.href = 'auth/login';
+</script>
+{% endif %}
+</html>
+            

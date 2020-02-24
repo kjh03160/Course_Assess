@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <title>Document</title>
+    <title>강의평 수정</title>
 
 
     <style>
@@ -256,8 +256,16 @@
             font-size: 20px;
 
         }
-    </style>
 
+        nav {
+            position: absolute !important;
+            top: 0%;
+            background-color: white !important;
+            width: 100%;
+            left: -10px;
+        }
+
+    </style>
 
 
 </head>
@@ -265,9 +273,31 @@
 <body>
 
 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'post' %}">강의평가</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'logout' %}">로그아웃</a>
+            </li>
+            {%else%}
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'home' %}">로그인</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'signup_page' %}">회원가입</a>
+            </li>
+            {% endif %}
+        </div>
+      </nav>
 
-
-
+      {% if user.is_authenticated %}
 
     <div class="page-header">
         <h3>{{course.name}} - {{course.prof}}</h3>
@@ -319,5 +349,13 @@
 
 </body>
 
+{% else %}
+
+
+<script type="text/javascript">
+    alert('로그인이 필요합니다.')
+    window.location = 'auth/login';
+  </script>
+{% endif %}
 
 </html>

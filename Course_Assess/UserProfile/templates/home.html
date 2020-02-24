@@ -81,6 +81,7 @@
 		</div>
 		<div class="card-body">
       {% if user.is_authenticated %}
+      <button id="btn-Yes" class="btn btn-lg btn-primary btn-block" type="submit"><a href="{%url 'post' %}">강의 목록</a></button>     
       <button id="btn-Yes" class="btn btn-lg btn-primary btn-block" type="submit"><a href="{%url 'logout' %}">로그아웃</a></button>
       {%else%}
       <form class="form-signin" method="POST" action="{%url 'login' %}">
