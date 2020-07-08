@@ -104,7 +104,7 @@ def newreply(request):
             else:
                 course.stars = int(request.POST['rating']) 
             course.save()
-            return redirect('/posts/'+ comment.course.name + '/' + comment.course.prof)
+            return redirect('detail', name = comment.course.name, prof = comment.course.prof)
 
         else:
             
@@ -127,13 +127,13 @@ def newreply(request):
                 }
             return render(request, 'post_detail.html', context)
     else :
-            return redirect('/posts') # 홈으로
+            return redirect('/') # 홈으로
 
 def comment_remove(request, pk):
     comment = get_object_or_404(Assessment, pk=pk)
     post = get_object_or_404(Course, name=comment.course.name, prof=comment.course.prof)
     if not comment.post == request.user:
-        return HttpResponseRedirect("/posts/{0}/{1}".format(post.name, post.prof))
+        return redirect('detail', name = comment.course.name, prof = comment.course.prof)
     else:
         count = post.count
         assess = comment.star
@@ -147,7 +147,7 @@ def comment_remove(request, pk):
         post.count = count
         post.save()
 
-        return redirect("/posts/{0}/{1}".format(post.name, post.prof))
+        return redirect('detail', name = comment.course.name, prof = comment.course.prof)
 
 
 def comment_update(request, pk):

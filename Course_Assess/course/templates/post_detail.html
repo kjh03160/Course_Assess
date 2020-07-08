@@ -335,7 +335,7 @@
 
     <div class="side-article">
 
-        <form method="POST" action="/posts/newreply">
+        <form method="POST" action="{% url 'newreply' %}">
             {% csrf_token %}
 
             <input type="hidden" value="{{course.name}}+{{course.prof}}" name="blog">

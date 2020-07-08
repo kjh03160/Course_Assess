@@ -13,15 +13,18 @@ def signup_page(request):
 def signup(request):
     if request.method == "POST":
         if request.POST["password"] == request.POST["password2"] and len(request.POST["username"])==9:
-            user = User.objects.create_user(
-                username = request.POST["username"],
-                password = request.POST["password"]
-            )
-            auth.login(request, user)
-            return redirect('/')
+            try:
+                user = User.objects.create_user(
+                    username = request.POST["username"],
+                    password = request.POST["password"]
+                )
+                auth.login(request, user)
+                return redirect('/')
+            except:
+                return render(request, 'signup.html', {'error':'이미 존재하는 학번입니다.'})
+
         else:
             return render(request, 'signup.html', {'error':'학번이 잘못되었거나 비밀번호가 일치하지 않습니다'})
-        return render(request, 'signup.html')
     
     return render(request, 'signup.html')
 
