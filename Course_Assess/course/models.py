@@ -22,7 +22,7 @@ class Course(models.Model):
 
 class Assessment(models.Model):
     course = models.ForeignKey(Course, related_name='course_comments',on_delete=models.CASCADE)
-    post = models.OnetoOneField(User, related_name='user_comments', on_delete = models.CASCADE)
+    post = models.OneToOneField(User, related_name='user_comments', on_delete = models.CASCADE)
     star = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     contents = models.TextField(blank=False)
     created_date = models.DateTimeField(default=timezone.now)
