@@ -21,7 +21,7 @@ class Course(models.Model):
         return temp.format(self.name, self.prof)
 
 class Assessment(models.Model):
-    course = models.OneToOneField(Course, related_name='course_comments',on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, related_name='course_comments',on_delete=models.CASCADE)
     post = models.ForeignKey(User, related_name='user_comments', on_delete = models.CASCADE)
     star = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     contents = models.TextField(blank=False)
