@@ -21,18 +21,18 @@ def setting(request):
     return render(request, 'post.html', {'courses':courses, 'error' : '접근 권한이 없습니다!'})
 
 def db_push(request):
-    year = request.GET.get('year')
-    semester = request.GET.get('semester')
+    year = request.POST['year']
+    semester = request.POST['semester']
     crwal_Table.crwaling(year, semester)
     # crwal_Table2.crwaling(year, semester)
     return redirect('/')
 
-def db_push2(request):
-    year = request.GET.get('year2')
-    semester = request.GET.get('semester2')
-    crwal_Table2.crwaling(year, semester)
+# def db_push2(request):
+#     year = request.GET.get('year2')
+#     semester = request.GET.get('semester2')
+#     crwal_Table2.crwaling(year, semester)
 
-    return redirect('/')
+#     return redirect('/')
 
 def course_list(request):
     courses = Course.objects.all().order_by('year')

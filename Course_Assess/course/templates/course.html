@@ -12,7 +12,8 @@
 
 
 
-    <form method="GET" action="/crwal">
+    <form method="POST" action="{% url 'crawl' %}">
+        {% csrf_token %}
         <input name="year" / >
 <input name="semester" / >
 

@@ -5,7 +5,7 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
-    path('course', include('course.urls')),
+    path('course/', include('course.urls')),
 
     # 유저계정
     path('auth/', include('UserProfile.urls'))
